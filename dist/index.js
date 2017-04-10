@@ -17,6 +17,15 @@ var _send2 = _interopRequireDefault(_send);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (secret, controller) {
+  if (!secret) {
+    console.error('uTu ERROR: Missing Secret');
+    return;
+  }
+
+  if (!controller) {
+    console.error('uTu ERROR: Missing Controller');
+    return;
+  }
   var utu = new _utu.uTu(secret);
   controller.middleware.receive.use((0, _receive2.default)(utu));
   controller.middleware.send.use((0, _send2.default)(utu));
