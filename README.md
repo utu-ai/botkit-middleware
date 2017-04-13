@@ -1,10 +1,26 @@
-# Botkit uTu Middleware
+# uTu Botkit Middleware
 
-This middleware is the official uTu integration middleware for botkit. It provides
-tools for analytics, advertising, and livechat functionality that utu provides through its
-online console, found at [https://utu.ai]().
+This middleware is the official uTu integration middleware for botkit.
 
-## Installation
+uTu is an engagement AI for chatbots.  While you focus on training your bot to be an expert in some area, like recommending dinner options or buying movie tickets, our Cyrano AI  interpret's your user conversations looking for opportunities for brand engagement.  Once setup, business users can use our console to define when and where to deliver surveys, product recommendations, route users to a live agent, or a paid sponsorship.
+
+Beyond this, uTu also offers robust cross-platform analytics.  We enable you to consistently recognize your users wherever you see them and provide an entirely configurable reporting tool.
+
+New to bot making?  Check out [https://betterbots.utu.ai/course/building-your-first-bot-with-botkit/]() for a stepwise example of creating a bot.  
+
+Or visit us at [https://utu.ai]() to learn more and get started.  
+
+## Setup An uTu Account
+Go to [https://utu.ai]() and create an account. Once logged in, on the main screen, click the large button to create a new bot.  You will have to supply a name.  From there, show, then copy your secret key.
+
+## Update Environment
+You need to update your environment variables.  Wherever, how ever you are doing that you need to add:
+```sh
+UTU_SECRET=thekeyyoucopiedfromutuconsole
+```
+
+## Install SDK
+Next you will need to incorporate our package.  Use one of the typical methods:
 
 ### yarn
 ```sh
@@ -16,39 +32,45 @@ $ yarn add botkit-middleware-utu
 $ npm install --save botkit-middleware-utu
 ```
 
-## Setup
+## Add Middleware
+Exactly where this goes will depend on your own code.  What we are looking to do though is to apply the middleware to the controller right after its setup.  It could look something like this:
+
 ```js
 import utuMiddleware from 'botkit-middleware-utu';
-import controller from './controller';
+import { facebookbot } from 'botkit';
+
+// create an instance of the facebook bot controller - this could be any controller, just using this for demo
+const controller = facebookbot({
+  access_token: process.env.FB_ACCESS_TOKEN,
+  verify_token: process.env.FB_VERIFY_TOKEN,
+});
 
 // running the uTu middleware function and passing in the controller you have already
-// created for your bot will allow uTu to add a new send and receive middleware, it will
-// also pass a new contextual instance of uTu with each message that comes to your bot.
+// created for your bot will allow uTu to add a new send and receive middleware,
 utuMiddleware(process.env.UTU_SECRET, controller);
 ```
 
-## Usage Example (Custom Event)
+## Usage Example - Track an Event
+From anywhere in your bot you can log an event to uTu.  This can be useful for logging intents, but also things from your business processing logic, etc. (e.g., purchase made).
 ```js
-import controller from './controller';
-
+...
 controller.hears('hello world', ['message_received'], (bot, message) => {
-  // log a custom event in utu to track that this user has seen the `hello-world`
-  // event, with a custom property of 20 so that we can segment our users/events based on
-  // this property.
+  // log an event in utu to track that this user has experienced `hello-world`
   message.utu.event('hello-world', {
     values: {
       customProperty: 20,
     },
+    // with an event, you can also supply a list of custom properties
   });
-
   bot.reply(message, 'hello');
 });
+...
 ```
 
-## Usage Example (User Information)
+## Usage Example - Update a User
+Very similar to tracking an event.  Here we simply specify the data to be appended to the user.
 ```js
-import controller from './controller';
-
+...
 controller.hears('login (.*)', ['message_received'], (bot, message) => {
   const email = message.match && message.match[1];
 
@@ -69,12 +91,13 @@ controller.hears('login (.*)', ['message_received'], (bot, message) => {
 
   bot.reply(message, 'you are now logged in.');
 });
+...
 ```
 
-## Usage Example (Intent)
+## Usage Example - uTu Engagement
+From within your intent definitions you can make a call to uTu to determine a proper response. Depending on what you have setup in the console, this call could return a sponsorship, a survey, a product recommendation, or even a live agent.  You can get creative as to where and when to invoke this call.  Before, after, or as a replacement for something your bot may say.
 ```js
-import controller from './controller';
-
+...
 controller.hears('check balance', ['message_received'], async (bot, message) => {
 
   try {
@@ -93,6 +116,7 @@ controller.hears('check balance', ['message_received'], async (bot, message) => 
 
   bot.reply(message, 'you are now logged in.');
 });
+...
 ```
 
 ## Testing
