@@ -4,11 +4,16 @@ This is the official uTu integration package for Botkit.
 
 uTu is an engagement AI for chatbots.  While you focus on training your bot to be an expert in some area, like recommending dinner options or buying movie tickets, our Cyrano AI  interpret's your user conversations looking for opportunities for brand engagement.  Once setup, business users can use our console to define when and where to deliver surveys, product recommendations, users to a live agent, or a paid sponsorship.
 
-![Sponsored Dialog](/docs/subaru_sample_dialog.gif)
-
-uTu also offers robust cross-platform analytics.  We enable you to consistently recognize your users wherever you see them and provide a robust reporting tool.
-
-![New User Report](/docs/new_users_sample_report.png)
+<div>
+<div style="width: 50%;">
+  <img src="/docs/subaru_sample_dialog.gif" style="width: 100%" />
+</div>
+<div style="width: 50%;">
+   <p>uTu also offers robust cross-platform analytics.  We enable you to consistently recognize your users wherever you see them and provide a robust reporting tool.
+17</p>
+  <img src="/docs/new_users_sample_report.png" style="width: 100%" />
+</div>
+</div>
 
 This middleware can be run with any of the FB controllers, including Slack, Messenger, SMS, as well as Alexa ([Alexa controller](https://www.npmjs.com/package/alexa-botkit)).
 
