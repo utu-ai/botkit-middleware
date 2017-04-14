@@ -4,13 +4,13 @@ This is the official uTu integration package for Botkit.
 
 uTu is an engagement AI for chatbots.  While you focus on training your bot to be an expert in some area, like recommending dinner options or buying movie tickets, our Cyrano AI  interpret's your user conversations looking for opportunities for brand engagement.  Once setup, business users can use our console to define when and where to deliver surveys, product recommendations, users to a live agent, or a paid sponsorship.
 
+uTu also offers robust cross-platform analytics.  We enable you to consistently recognize your users wherever you see them and provide a robust reporting tool.
+
 <table>
   <tbody>
     <tr>
       <td><img src="/docs/subaru_sample_dialog.gif" style="width: 100%" /></td>
       <td>
-       <p>uTu also offers robust cross-platform analytics.  We enable you to consistently recognize your users wherever you see them and provide a robust reporting tool.
-17</p>
        <img src="/docs/new_users_sample_report.png" style="width: 100%" />
       </td>
     </tr>
