@@ -1,20 +1,25 @@
 # uTu Botkit Middleware
 
-This middleware is the official uTu integration middleware for botkit.
+This is the official uTu integration package for Botkit.
 
-uTu is an engagement AI for chatbots.  While you focus on training your bot to be an expert in some area, like recommending dinner options or buying movie tickets, our Cyrano AI  interpret's your user conversations looking for opportunities for brand engagement.  Once setup, business users can use our console to define when and where to deliver surveys, product recommendations, route users to a live agent, or a paid sponsorship.
+![Sponsored Dialog](/docs/subaru_sample_dialog.gif)
+![New User Report](/docs/new_users_sample_report.png)
 
-Beyond this, uTu also offers robust cross-platform analytics.  We enable you to consistently recognize your users wherever you see them and provide an entirely configurable reporting tool.
+uTu is an engagement AI for chatbots.  While you focus on training your bot to be an expert in some area, like recommending dinner options or buying movie tickets, our Cyrano AI  interpret's your user conversations looking for opportunities for brand engagement.  Once setup, business users can use our console to define when and where to deliver surveys, product recommendations, users to a live agent, or a paid sponsorship.
 
-New to bot making?  Check out [https://betterbots.utu.ai/course/building-your-first-bot-with-botkit/]() for a stepwise example of creating a bot.  
+uTu also offers robust cross-platform analytics.  We enable you to consistently recognize your users wherever you see them and provide a robust reporting tool.
+
+This middleware can be run with any of the FB controllers, including Slack, Messenger, SMS, as well as Alexa ([Alexa controller](https://www.npmjs.com/package/alexa-botkit)).
+
+New to bot making?  Check out [https://betterbots.utu.ai/course/building-your-first-bot-with-botkit/]() for a stepwise example of creating a Botkit bot.  
 
 Or visit us at [https://utu.ai]() to learn more and get started.  
 
 ## Setup An uTu Account
-Go to [https://utu.ai]() and create an account. Once logged in, on the main screen, click the large button to create a new bot.  You will have to supply a name.  From there, show, then copy your secret key.
+Go to [https://utu.ai]() and create an account. Once logged in, on the main screen, click the large button to create a new bot.  You will have to supply a name.  From there, "show", then copy your secret key.
 
 ## Update Environment
-You need to update your environment variables.  Wherever, how ever you are doing that you need to add:
+You need to update your environment variables.  Wherever you are maintaining this, you need to add:
 ```sh
 UTU_SECRET=thekeyyoucopiedfromutuconsole
 ```
@@ -33,7 +38,7 @@ $ npm install --save botkit-middleware-utu
 ```
 
 ## Add Middleware
-Exactly where this goes will depend on your own code.  What we are looking to do though is to apply the middleware to the controller right after its setup.  It could look something like this:
+Generally, you will want to add the middleware into your code right after you've setup your controller.  It could look something like this:
 
 ```js
 import utuMiddleware from 'botkit-middleware-utu';
@@ -56,11 +61,13 @@ From anywhere in your bot you can log an event to uTu.  This can be useful for l
 ...
 controller.hears('hello world', ['message_received'], (bot, message) => {
   // log an event in utu to track that this user has experienced `hello-world`
+  message.utu.event('hello-world');
+
+  // or you could log the event with a list of custom key value pairs.
   message.utu.event('hello-world', {
     values: {
       customProperty: 20,
     },
-    // with an event, you can also supply a list of custom properties
   });
   bot.reply(message, 'hello');
 });
@@ -95,7 +102,7 @@ controller.hears('login (.*)', ['message_received'], (bot, message) => {
 ```
 
 ## Usage Example - uTu Engagement
-From within your intent definitions you can make a call to uTu to determine a proper response. Depending on what you have setup in the console, this call could return a sponsorship, a survey, a product recommendation, or even a live agent.  You can get creative as to where and when to invoke this call.  Before, after, or as a replacement for something your bot may say.
+From within your intent definitions you can make a call to uTu to solicit a response. Depending on your console  setup, this call could return a sponsorship, a survey, a product recommendation, or even a live agent.  You can get creative as to where and when to invoke this call.  Before, after, or as a replacement for something your bot may say.
 ```js
 ...
 controller.hears('check balance', ['message_received'], async (bot, message) => {
@@ -138,6 +145,8 @@ All files                      |      100 |      100 |      100 |      100 |    
  send.js                       |      100 |      100 |      100 |      100 |                |
 -------------------------------|----------|----------|----------|----------|----------------|
 ```
+## Usage Guidelines
+Be a good corporate citizen.  Use the power of uTu to enhance your user's experience.  If you request and capture Pii, like for a login, you should disclose a privacy statement to the user.  You are 100% responsible for your user relationship.  Your statement should comply w/ both Botkits and [uTu's statements](https://utu.ai/privacy-policy).
 
 ## Questions/Support
 Feel free to leave us any question or issues you have right here on github and we will reply as soon as we can.
