@@ -1,6 +1,6 @@
 {
   "name": "botkit-middleware-utu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "uTu offical javascript sdk for botkit",
   "main": "dist/index.js",
   "scripts": {

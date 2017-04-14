@@ -9,6 +9,12 @@ import getMessageDataForPlatform from './get-platform-message';
  * @return {Function}   the middleware function for receiving mesage
  */
 export default (utu) => (bot, message, next) => {
+  // incase the message is an echo we want to ignore it so we wont
+  // get duplicate messages
+  if (message.is_echo) {
+    return next();
+  }
+
   // get utu's name for a given platform
   const platform = getUTUPlatformName(bot.type);
 
